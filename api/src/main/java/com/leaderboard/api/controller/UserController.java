@@ -20,14 +20,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<User> createUser(@RequestBody User user) throws BadRequestException {
+        System.out.println("Inside createUser in UserController.java");
         return ResponseEntity.ok(userService.createUser(user));
     }
 
-    @PutMapping("/{userId}/score")
-    public ResponseEntity<User> updateUserScore(@PathVariable String userId, @RequestParam int score) {
-        return ResponseEntity.ok(userService.updateUserScore(userId, score));
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateUserScore(@PathVariable("userId") String userId, @RequestBody User userScore) throws BadRequestException {
+        return ResponseEntity.ok(userService.updateUserScore(userId, userScore));
     }
 
     @GetMapping("/{userId}")
@@ -40,5 +41,9 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUserById(@PathVariable String userId) {
+        return ResponseEntity.ok(userService.deleteUserById(userId));
+    }
 
 }
